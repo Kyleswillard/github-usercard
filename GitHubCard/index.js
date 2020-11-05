@@ -9,7 +9,10 @@ STEP 1: using axios, send a GET request to the following URL
 const gitApi = "https://api.github.com/users/"
 
 axios.get(`${gitApi}kyleswillard`) //Returns the user information from the Github API - COMPLETE
-
+  .then(res => {
+    // console.log(res)
+    createCard(res)
+  })
 /*
   STEP 2: Inspect and study the data coming back, this is YOUR
     github info! You will need to understand the structure of this
@@ -80,10 +83,10 @@ axios.get(`${gitApi}kyleswillard`) //Returns the user information from the Githu
       <div class="card-info">
         <h3 class="name">{users name}</h3> => Added
         <p class="username">{users user name}</p> => Added
-        <p>Location: {users location}</p>
+        <p>Location: {users location}</p> => Added
         <p>Profile:
           <a href={address to users github page}>{address to users github page}</a>
-        </p>
+        </p> => Added
         <p>Followers: {users followers count}</p>
         <p>Following: {users following count}</p>
         <p>Bio: {users bio}</p>
@@ -91,38 +94,77 @@ axios.get(`${gitApi}kyleswillard`) //Returns the user information from the Githu
     </div>
 */
 const createCard = user => {
-let ghUser = user.data
-let div = document.createElement('div')
-  div.classList.add('card');
+  let ghUser = user.data // Establish var for user.data
+  let elements = [] // elements => append each card to DOM
+  let infoElements = [] // infoElements => attach info to .Cards
 
-let image = document.createElement('img');
-  image.attributes('src', ghUser.avatar_URL);
 
-let h3 = document.createElement('h3');
+
+  let card = document.createElement('div') // Parent
+  card.classList.add('card')
+
+
+  let pic = document.createElement('img')
+  pic.src = ghUser.avatar_url
+  elements.push(pic)
+
+  let cardInfo = document.createElement('div') // 2nd Parent
+  cardInfo.classList.add('card-info')
+
+  let h3 = document.createElement('h3')
   h3.classList.add('name')
-  h3.textContent(ghUser.name)
+  h3.textContent = ghUser.name;
+  infoElements.push(h3)
 
-let username = document.createElement('p')
-  username.classlist.add('username');
-  username.textContent(ghUser.username)
+  let username = document.createElement('p')
+  username.classList.add('username')
+  username.textContent = ghUser.username
+  infoElements.push(username)
 
-let loc = document.createElement('p')
-  loc.textContent(ghUser.location)
+  let loc = document.createElement('p')
+  loc.textContent = ghUser.location
+  infoElements.push(loc)
 
-let profile = document.createElement('p')
-  profile.textContent("Profile: ")
+  let profile = document.createElement('p')
+  profile.textContent = "Profile: "
+  infoElements.push(profile)
 
-let url = document.createElement('a')
-url.href = ghUser.url
-url.textContent = ghUser.url
-profile.appendChild(url)
+  let url = document.createElement('a')
+  url.href = ghUser.url
+  url.textContent = ghUser.url
+  profile.appendChild(url)
+  infoElements.push(url)
 
+  let followers = document.createElement('p')
+  followers.textContent = 'Followers: ' + ghUser.followers // DOUBLE CHECK FUNCTIONALITY ON THIS LINE!!
+  infoElements.push(followers)
 
+  let following = document.createElement('p')
+  following.textContent = 'Following: ' + ghUser.following // DOUBLE CHECK FUNCTIONALITY ON THIS LINE!!
+  infoElements.push(following)
 
+  let bio = document.createElement('p')
+  bio.textContent = ghUser.bio
+  infoElements.push(bio)
+
+  infoElements.forEach(e => {
+    cardInfo.appendChild(e)
+  })
+
+  elements.push(cardInfo)
+
+  let cards = document.querySelector('.cards')
+
+  elements.forEach(e => {
+    card.appendChild(e)
+  })
+  cards.appendChild(card)
 
 
 
 }
+
+
 /*
   List of LS Instructors Github username's:
     tetondan
