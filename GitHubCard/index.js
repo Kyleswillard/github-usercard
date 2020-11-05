@@ -8,11 +8,23 @@ STEP 1: using axios, send a GET request to the following URL
 */
 const gitApi = "https://api.github.com/users/"
 
-axios.get(`${gitApi}kyleswillard`) //Returns the user information from the Github API - COMPLETE
-  .then(res => {
-    // console.log(res)
-    createCard(res)
-  })
+axios
+    .get(`${gitApi}kyleswillard`) //Returns the user information from the Github API - COMPLETE
+      .then(res => {
+        // console.log(res)
+        createCard(res)
+    axios
+      .get(res.data.followers_url)
+      .then(res => {
+        res.data.forEach(e => {
+          followersArray.push(e.login)
+        })
+        addFriends();
+      })
+      .catch(err => {
+        console.log(err)
+      })
+    })
 /*
   STEP 2: Inspect and study the data coming back, this is YOUR
     github info! You will need to understand the structure of this
@@ -59,6 +71,7 @@ axios.get(`${gitApi}kyleswillard`) //Returns the user information from the Githu
 /*
   STEP 4: Pass the data received from Github into your function,
     and append the returned markup to the DOM as a child of .cards
+    COMPLETE
 */
 
 /*
@@ -72,7 +85,18 @@ axios.get(`${gitApi}kyleswillard`) //Returns the user information from the Githu
     user, and adding that card to the DOM.
 */
 
-// const followersArray = [];
+const followersArray = [];
+
+const addFriends = () => {
+  followersArray.forEach(e => {
+    axios
+      .get(`${gitApi}${e}`)
+      .then(res => {
+        createCard(res)
+     })
+      .catch(err => console.log(err))
+  })
+}
 
 /*
   STEP 3: Create a function that accepts a single object as its only argument.

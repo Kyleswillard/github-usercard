@@ -41,7 +41,7 @@ In this project we are going to be accessing the GitHub API and building a socia
 
 ### Axios Setup
 
-#### Option 1 (adding Axios via script element)
+#### Option 1 (adding Axios via script element) - NO!
 
 * [ ] Include the script element linking the `axios` library in your HTML.
 * [ ] If you do not remember the code you can find it [here](https://github.com/axios/axios).
@@ -67,7 +67,7 @@ In this project we are going to be accessing the GitHub API and building a socia
 
 ### Stretch Goals
 
-* Instead of manually creating a list of followers, do it programmatically. Create a function that requests the followers data from the API after it has received your data and create a card for each of your followers. Hint: you can chain promises.
+* Instead of manually creating a list of followers, do it programmatically. Create a function that requests the followers data from the API after it has received your data and create a card for each of your followers. Hint: you can chain promises. => COMPLETE
 
 * Look into adding more info as an expanding card. You will need to create some new CSS and a button that expands and contracts the card.
 
